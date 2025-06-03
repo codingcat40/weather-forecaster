@@ -1,11 +1,16 @@
 import './App.css'
+import { Routes, Route } from 'react-router'
+
+import Home from './components/Home'
+import AboutAPI from './components/AboutAPI'
 
 function App() {
 
   return (
-   <div className='text-2xl'>
-      Welcome to Weather Forecaster
-   </div>
+   <Routes>
+    <Route path='/' element={<Home/>} />
+    <Route path='/about-api' element={<AboutAPI />}/>
+   </Routes>
   )
 }
 
