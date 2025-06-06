@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 const Home = () => {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [place, setPlace] = useState("");
-  const BASE_URL = `https://api.weatherapi.com/v1/forecast.json?key=`
+
+  const [current, setCurrent] = useState(null);
+  const [forecast, setForcast] = useState(null);
+  const [loc, setLoc] = useState(null);
+
+  const BASE_URL = `https://api.weatherapi.com/v1/forecast.json?key=`;
 
   const fetchCurrentLocation = () => {
     navigator.geolocation.watchPosition((pos) => {
@@ -15,18 +20,30 @@ const Home = () => {
   };
 
   const fetchCurrentForecast = async (e) => {
-    e.preventDefault()
-    const url = `${BASE_URL}${import.meta.env.VITE_API_KEY}&q=${location.latitude},${location.longitude}`;
+    e.preventDefault();
+    const url = `${BASE_URL}${import.meta.env.VITE_API_KEY}&q=${
+      location.latitude
+    },${location.longitude}`;
     const response = await fetch(url);
-    console.log(await response.json());
+    // console.log(await response.json());
+    const data = await response.json();
+    setCurrent(data.current);
+    setForcast(data.forecast);
+    setLoc(data.location);
+    console.log(data.location);
   };
 
   // handle the submit for manual search
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = `${BASE_URL}${import.meta.env.VITE_API_KEY}&q=${place}`
-    const response = await fetch(url)
-    console.log(await response.json())   
+    const url = `${BASE_URL}${import.meta.env.VITE_API_KEY}&q=${place}`;
+    const response = await fetch(url);
+
+    const data = await response.json();
+    setCurrent(data.current);
+    setForcast(data.forecast);
+    setLoc(data.location);
+    console.log(data);
   };
 
   useEffect(() => {
@@ -34,7 +51,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="fixed top-20 w-full flex justify-center z-10 px-4 max-h-fit">
+    <div className="absolute top-20 w-full flex justify-center z-10 px-4 min-h-full">
       <div className="text-center max-w-2xl">
         <h1 className="text-2xl font-semibold mb-2">
           Your Location: Longitude: {location.longitude}, Latitude:{" "}
@@ -45,7 +62,12 @@ const Home = () => {
           {/* search button here probably */}
           {/* then todays weather or forecase */}
 
-          <button onClick={fetchCurrentForecast} className="w-full bg-blue-200 hover:bg-blue-400 hover:cursor-pointer duration-300 hover:transition-all rounded-2xl p-1 mt-4 text-lg">Click here to fetch your Current Forecast</button>
+          <button
+            onClick={fetchCurrentForecast}
+            className="w-full bg-blue-200 hover:bg-blue-400 hover:cursor-pointer duration-300 hover:transition-all rounded-2xl p-1 mt-4 text-lg"
+          >
+            Click here to fetch your Current Forecast
+          </button>
 
           <form className="flex flex-col justify-center mt-24 text-2xl space-y-6">
             <label>Search the place name...</label>
@@ -63,7 +85,37 @@ const Home = () => {
           </form>
 
           <div className="space-y-6">
-            <h3>Weather Forecast</h3>
+            {/* first div for location */}
+
+            {loc && (
+              <div className="flex flex-col space-y-2">
+                <h2 className="text-2xl mt-8 font-bold">Location Details</h2>
+                <p className="text-xl">
+                  {loc.name}, {loc.region}, {loc.country}
+                </p>
+                <p className="text-xl">{loc.localtime}</p>
+                <p className="text-lg">
+                  Timezone: <span className="font-thin">{loc.tz_id}</span>
+                </p>
+              </div>
+            )}
+
+
+
+
+            {/* second div for current weather */}
+            {
+              current && (
+                <div className="flex flex-col space-y-2">
+                  <h2 className="text-2xl font-bold">Current Weather</h2>
+                  <section className="flex flex-row gap-4 mx-auto">
+                    <p className="text-lg">{current.condition.text}</p>
+                    <img src={`https://cdn.weatherapi.com/weather/64x64/day/113.png`} className="size-12"></img>
+                  </section>
+                </div>
+              )
+            }
+
           </div>
         </div>
       </div>
