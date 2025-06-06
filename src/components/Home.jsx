@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 const Home = () => {
   const [location, setLocation] = useState({ latitude: null, longitude: null });
   const [place, setPlace] = useState("");
-
+  const BASE_URL = `https://api.weatherapi.com/v1/forecast.json?key=`
 
   const fetchCurrentLocation = () => {
     navigator.geolocation.watchPosition((pos) => {
@@ -16,7 +16,7 @@ const Home = () => {
 
   const fetchCurrentForecast = async (e) => {
     e.preventDefault()
-    const url = `https://api.weatherapi.com/v1/forecast.json?key=8cc6ff6a05c54a0e81660428250306&q=${location.latitude},${location.longitude}`;
+    const url = `${BASE_URL}${import.meta.env.VITE_API_KEY}&q=${location.latitude},${location.longitude}`;
     const response = await fetch(url);
     console.log(await response.json());
   };
