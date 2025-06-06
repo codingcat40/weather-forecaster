@@ -21,10 +21,12 @@ const Home = () => {
     console.log(await response.json());
   };
 
-  // handle the submit
-  const handleSubmit = async () => {
-    // e.preventDefault();
-    // URL: https://api.weatherapi.com/v1/current.json?key=8cc6ff6a05c54a0e81660428250306&q=bangalore
+  // handle the submit for manual search
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const url = `${BASE_URL}${import.meta.env.VITE_API_KEY}&q=${place}`
+    const response = await fetch(url)
+    console.log(await response.json())   
   };
 
   useEffect(() => {
@@ -51,6 +53,7 @@ const Home = () => {
               type="text"
               required
               className="bg-blue-50 w-54 h-12 mx-auto shadow-md rounded-2xl text-center"
+              onChange={(e) => setPlace(e.target.value)}
             />
             <input
               type="submit"
