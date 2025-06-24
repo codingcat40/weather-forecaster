@@ -100,22 +100,62 @@ const Home = () => {
               </div>
             )}
 
-
-
-
             {/* second div for current weather */}
-            {
-              current && (
-                <div className="flex flex-col space-y-2">
-                  <h2 className="text-2xl font-bold">Current Weather</h2>
-                  <section className="flex flex-row gap-4 mx-auto">
-                    <p className="text-lg">{current.condition.text}</p>
-                    <img src={`https://cdn.weatherapi.com/weather/64x64/day/113.png`} className="size-12"></img>
+            {current && (
+              <div className="flex flex-col space-y-2">
+                <h2 className="text-2xl font-bold">Current Weather</h2>
+                <section className="flex flex-row gap-4 mx-auto">
+                  <p className="text-lg">{current.condition.text}</p>
+                  <img
+                    src={`https://cdn.weatherapi.com/weather/64x64/day/113.png`}
+                    className="size-12"
+                  ></img>
+                </section>
+              </div>
+            )}
+            {forecast && (
+              <div className="flex flex-col space-y-2">
+                <h2 className="text-2xl font-bold">Weather Forecast</h2>
+                {console.log(forecast.forecastday[0])}
+
+                <div className="flex-col space-y-1.5">
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold text-xl">Sunrise</h3>
+                    <span className="text-lg">
+                      {forecast.forecastday[0].astro.sunrise}
+                    </span>
+                  </section>
+
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold text-xl">Sunset</h3>
+                    <span className="text-lg">
+                      {forecast.forecastday[0].astro.sunset}
+                    </span>
+                  </section>
+
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold text-xl">Moonrise</h3>
+                    <span className="text-lg">
+                      {forecast.forecastday[0].astro.moonrise}
+                    </span>
+                  </section>
+
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold text-xl">Moonset</h3>
+                    <span className="text-lg">
+                      {forecast.forecastday[0].astro.moonset}
+                    </span>
+                  </section>
+
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold text-xl">Moon phase</h3>
+                    <span className="text-lg">
+                      {forecast.forecastday[0].astro.moon_phase}
+                    </span>
                   </section>
                 </div>
-              )
-            }
-
+              </div>
+            )}
           </div>
         </div>
       </div>
