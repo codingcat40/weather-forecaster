@@ -107,8 +107,8 @@ const Home = () => {
                 <section className="flex flex-row gap-4 mx-auto">
                   <p className="text-lg">{current.condition.text}</p>
                   <img
-                    src={`https://cdn.weatherapi.com/weather/64x64/day/113.png`}
-                    className="size-12"
+                    src={`https:${forecast.forecastday[0].day.condition.icon}`}
+                    className="size-10"
                   ></img>
                 </section>
               </div>
@@ -119,40 +119,59 @@ const Home = () => {
                 {console.log(forecast.forecastday[0])}
 
                 <div className="flex-col space-y-1.5">
+                  <h3 className="text-xl">Astrometeorology</h3>
                   <section className="flex gap-4 justify-center">
-                    <h3 className="font-bold text-xl">Sunrise</h3>
-                    <span className="text-lg">
+                    <h3 className="font-bold">Sunrise</h3>
+                    <span>
                       {forecast.forecastday[0].astro.sunrise}
                     </span>
                   </section>
 
                   <section className="flex gap-4 justify-center">
-                    <h3 className="font-bold text-xl">Sunset</h3>
-                    <span className="text-lg">
+                    <h3 className="font-bold">Sunset</h3>
+                    <span>
                       {forecast.forecastday[0].astro.sunset}
                     </span>
                   </section>
 
                   <section className="flex gap-4 justify-center">
-                    <h3 className="font-bold text-xl">Moonrise</h3>
-                    <span className="text-lg">
+                    <h3 className="font-bold">Moonrise</h3>
+                    <span>
                       {forecast.forecastday[0].astro.moonrise}
                     </span>
                   </section>
 
                   <section className="flex gap-4 justify-center">
-                    <h3 className="font-bold text-xl">Moonset</h3>
-                    <span className="text-lg">
+                    <h3 className="font-bold">Moonset</h3>
+                    <span>
                       {forecast.forecastday[0].astro.moonset}
                     </span>
                   </section>
 
                   <section className="flex gap-4 justify-center">
-                    <h3 className="font-bold text-xl">Moon phase</h3>
-                    <span className="text-lg">
+                    <h3 className="font-bold">Moon phase</h3>
+                    <span>
                       {forecast.forecastday[0].astro.moon_phase}
                     </span>
                   </section>
+                </div>
+
+                <div className="flex flex-col space-y-1.5">
+                  <h3 className="text-xl">Temperature ({forecast.forecastday[0].day.condition.text})</h3>
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold">Average Humidity</h3>
+                    <span>{forecast.forecastday[0].day.avghumidity}</span>
+                  </section>
+
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold">Average Temperature</h3>
+                    <span>{forecast.forecastday[0].day.avgtemp_c} celcius
+                      / {forecast.forecastday[0].day.avgtemp_f} fahrenheit
+                    </span>
+                  </section>
+
+                 
+
                 </div>
               </div>
             )}
