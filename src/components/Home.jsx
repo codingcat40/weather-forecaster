@@ -122,42 +122,35 @@ const Home = () => {
                   <h3 className="text-xl">Astrometeorology</h3>
                   <section className="flex gap-4 justify-center">
                     <h3 className="font-bold">Sunrise</h3>
-                    <span>
-                      {forecast.forecastday[0].astro.sunrise}
-                    </span>
+                    <span>{forecast.forecastday[0].astro.sunrise}</span>
                   </section>
 
                   <section className="flex gap-4 justify-center">
                     <h3 className="font-bold">Sunset</h3>
-                    <span>
-                      {forecast.forecastday[0].astro.sunset}
-                    </span>
+                    <span>{forecast.forecastday[0].astro.sunset}</span>
                   </section>
 
                   <section className="flex gap-4 justify-center">
                     <h3 className="font-bold">Moonrise</h3>
-                    <span>
-                      {forecast.forecastday[0].astro.moonrise}
-                    </span>
+                    <span>{forecast.forecastday[0].astro.moonrise}</span>
                   </section>
 
                   <section className="flex gap-4 justify-center">
                     <h3 className="font-bold">Moonset</h3>
-                    <span>
-                      {forecast.forecastday[0].astro.moonset}
-                    </span>
+                    <span>{forecast.forecastday[0].astro.moonset}</span>
                   </section>
 
                   <section className="flex gap-4 justify-center">
                     <h3 className="font-bold">Moon phase</h3>
-                    <span>
-                      {forecast.forecastday[0].astro.moon_phase}
-                    </span>
+                    <span>{forecast.forecastday[0].astro.moon_phase}</span>
                   </section>
                 </div>
 
+                {/* Current Temperature */}
                 <div className="flex flex-col space-y-1.5">
-                  <h3 className="text-xl">Temperature ({forecast.forecastday[0].day.condition.text})</h3>
+                  <h3 className="text-xl">
+                    Temperature ({forecast.forecastday[0].day.condition.text})
+                  </h3>
                   <section className="flex gap-4 justify-center">
                     <h3 className="font-bold">Average Humidity</h3>
                     <span>{forecast.forecastday[0].day.avghumidity}</span>
@@ -165,13 +158,84 @@ const Home = () => {
 
                   <section className="flex gap-4 justify-center">
                     <h3 className="font-bold">Average Temperature</h3>
-                    <span>{forecast.forecastday[0].day.avgtemp_c} celcius
-                      / {forecast.forecastday[0].day.avgtemp_f} fahrenheit
+                    <span>
+                      {forecast.forecastday[0].day.avgtemp_c} celcius /{" "}
+                      {forecast.forecastday[0].day.avgtemp_f} fahrenheit
                     </span>
                   </section>
 
-                 
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold">Min Temperature</h3>
+                    <span>{forecast.forecastday[0].day.mintemp_c} celcius</span>
+                  </section>
 
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold">Max Temperature</h3>
+                    <span>{forecast.forecastday[0].day.maxtemp_c} celcius</span>
+                  </section>
+
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold">Total Precipation</h3>
+                    <span>{forecast.forecastday[0].day.totalprecip_mm} MM</span>
+                  </section>
+
+                  <section className="flex gap-4 justify-center">
+                    <h3 className="font-bold">Max wind</h3>
+                    <span>{forecast.forecastday[0].day.maxwind_mph} MPH</span>
+                  </section>
+                </div>
+
+                {/* day forecast */}
+                <div className="flex flex-col space-y-1.5">
+                  <h3 className="text-xl mt-8 font-bold">24 Hour Forecast</h3>
+
+                  {forecast.forecastday[0].hour &&
+                    forecast.forecastday[0].hour.map((h, index) => (
+                      <div className="flex flex-col mt-10 p-6 w-full mx-auto ">
+                        <img className="size-12" src={h.condition.icon}></img>
+                        <section
+                          className=" grid grid-cols-3 justify-center gap-8"
+                          key={index}
+                        >
+                          <p>
+                            <span className="font-bold">Time: </span>
+                            {h.time.slice(11)}
+                          </p>
+                          {console.log(h)}
+                          <p>
+                            <span className="font-bold">Temperature: </span>
+                            {h.temp_c} celcius
+                          </p>
+                          <p className="flex-row gap-6">
+                            <span className="font-bold">Feels Like: </span>
+                            {h.feelslike_c} celcius
+                          </p>
+
+                          <p>
+                            <span className="font-bold">Humidity: </span>
+                            {h.humidity}
+                          </p>
+                          <p>
+                            <span className="font-bold">wind direction: </span>
+                            {h.wind_dir}
+                          </p>
+
+                          <p>
+                            <span className="font-bold">Precipation: </span>
+                            {h.precip_mm} mm
+                          </p>
+
+                          <p>
+                            <span className="font-bold">Rain chances: </span>
+                            {h.will_it_rain === 0 ? "NO" : "YES"}
+                          </p>
+                          <p>
+                            <span className="font-bold">Snow chances: </span>
+                            {h.will_it_snow === 0 ? "NO" : "YES"}
+                          </p>
+                        </section>
+                      </div>
+                    ))}
                 </div>
               </div>
             )}
